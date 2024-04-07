@@ -7,9 +7,9 @@ rbtree *new_rbtree(void)
 {
   // tree 구조체 동적 할당
   rbtree *t = (rbtree *)calloc(1, sizeof(rbtree));
-
   // nill 노드 생성 및 초기화
   node_t *nil = (node_t *)calloc(1, sizeof(node_t));
+
   nil->color = RBTREE_BLACK; // nil은 BLACK 기본
 
   // tree의 nill과 root를 nil노드로 설정(tree가 빈 경우 root는 nil노드여야 한다.)
@@ -24,7 +24,7 @@ void delete_rbtree(rbtree *t)
 {
   node_t *node = t->root; // tree의 root node 가져오기
 
-  if (node != t->nil) // nil노드가 아니라면
+  if (node != t->nil)                     // nil노드가 아니라면
     search_until_nil_and_delete(t, node); // 자식 노드 순회하며 메모리 반환
 
   // nil노드와 tree메모리 반환
@@ -40,24 +40,32 @@ void delete_rbtree(rbtree *t)
 */
 void search_until_nil_and_delete(rbtree *t, node_t *node)
 {
-  if (node->left != t->nil) //자식(왼쪽) 노드가 존재하면 
+  if (node->left != t->nil) // 자식(왼쪽) 노드가 존재하면
     search_until_nil_and_delete(t, node->left);
-  if (node->right != t->nil)//자식(오른쪽) 노드가 존재하면
+  if (node->right != t->nil) // 자식(오른쪽) 노드가 존재하면
     search_until_nil_and_delete(t, node->right);
-    
-  //해당 노드 메모리 반환
+
+  // 해당 노드 메모리 반환
   free(node);
 }
 
 node_t *rbtree_insert(rbtree *t, const key_t key)
 {
-  // TODO: implement insert
+  // 새 노드 생성
+  // 새 노드 동적으로 생성
+  // 노드의 key를 입력받고, color를 red로, 자식 노드들은 nil노드로 설정
+  // 이미 같은 key의 값이 존재해도 하나 더 추가 한다.(multiset)
+
+  // 새 노드 삽입할 위치 탐색(rbtree_find()호출)
+  // 반복문 종료 후 새 노드의 부모를 지정
   return t->root;
 }
 
 node_t *rbtree_find(const rbtree *t, const key_t key)
 {
-  // TODO: implement find
+  // 루트 노드부터 탐색을 시작하여 탐색 중인 노드보다 key값이 작은 경우 왼쪽 자식으로, 큰경우 오른쪽 자식으로 이동
+  // 탐색 중인 노드의 자식 노드가 nil노드인 경우, 새 노드를 해당 자식 노드로 추가하고, 반복문을 종료한다.
+
   return t->root;
 }
 
