@@ -75,6 +75,7 @@ void delete_rbtree(rbtree *t) {
     // nil노드 free
     free(t->nil);
     free(t);
+    t=NULL;
 }
 
 void rbtree_insert_fixup(rbtree *t, node_t *z) {
@@ -168,6 +169,9 @@ node_t *rbtree_insert(rbtree *t, const key_t key) {
 node_t *rbtree_find(const rbtree *t, const key_t key) {
 
     node_t *current = t->root;
+
+    if (current == t->nil)
+        return NULL;
 
     while (current != t->nil) {
         if (current->key == key)
@@ -336,7 +340,7 @@ int rbtree_erase(rbtree *t, node_t *z) {
     }
 
     free(z);
-
+    z=NULL;
     return 0;
 }
 
